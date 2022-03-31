@@ -1,5 +1,5 @@
 module.exports = {
-    
+    lintOnSave:false,
     // 代理跨越
     devServer:{
         proxy:{
