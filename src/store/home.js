@@ -1,5 +1,5 @@
 // home模块的仓库
-import {reqGetCategoryList,reqGetBannerList,reqGetFloorList} from '../../api/index.js'
+import {reqGetCategoryList,reqGetBannerList,reqGetFloorList} from '../api/index.js'
 const state={
     categoryList:[],
     bannerList:[],

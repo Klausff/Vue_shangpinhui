@@ -1,5 +1,5 @@
 // search模块的仓库
-import { reqGetSearchInfo } from "../../api";
+import { reqGetSearchInfo } from "../api";
 const state={
     searchList:{}
 };
