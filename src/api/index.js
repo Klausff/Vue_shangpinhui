@@ -29,3 +29,9 @@ export const reqDeleteCartById=(skuId)=>requests({url:`/cart/deleteCart/${skuId}
 
 // 修改购物车产品是否被选中的接口
 export const reqUpdateCheckedById=(skuId,isChecked)=>requests({url:`/cart/checkCart/${skuId}/${isChecked}`,method:'get'})
+
+// 获取验证码的接口
+export const reqGetCode=(phone)=>requests({url:`/user/passport/sendCode/${phone}`,method:'get'})
+
+// 用户注册的接口
+export const reqUserRegister=(data)=>requests({url:'/user/passport/register/',data,method:'post'})
