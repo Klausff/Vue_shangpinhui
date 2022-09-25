@@ -21,6 +21,10 @@ requests.interceptors.request.use((config)=>{
     if(store.state.detail.uuid_token){
         config.headers.userTempId = store.state.detail.uuid_token
     }
+    // 需要携带token给服务器
+    if(store.state.user.token){
+        config.headers.token=store.state.user.token
+    }
     nprogress.start()
     return config
 })
@@ -30,9 +34,9 @@ requests.interceptors.response.use((res)=>{
     // 进度条结束
     nprogress.done()
     return res.data
-},(error)=>{
+},(err)=>{
     // 响应失败的回调函数
-    return Promise.reject(new Error('fail'))
+    alert("服务器响应数据失败了")
 })
 // 对外暴露
 export default requests

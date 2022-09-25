@@ -35,3 +35,12 @@ export const reqGetCode=(phone)=>requests({url:`/user/passport/sendCode/${phone}
 
 // 用户注册的接口
 export const reqUserRegister=(data)=>requests({url:'/user/passport/register/',data,method:'post'})
+
+// 用户登录的接口
+export const reqUserLogin=(data)=>requests({url:'/user/passport/login',data,method:'post'})
+
+// 获取用户的信息（需要带着用户的token向服务器要用户的信息）
+export const reqUserInfo=()=>requests({url:'/user/passport/auth/getUserInfo',method:'get'})
+
+// 退出登录
+export const reqLogOut=()=>requests({url:'/user/passport/logout',method:'get'})

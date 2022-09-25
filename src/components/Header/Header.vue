@@ -6,10 +6,18 @@
         <div class="container">
           <div class="loginList">
             <p>尚品汇欢迎您！</p>
-            <p>
+            <!-- 未登录 没用用户名 -->
+            <p v-if="!userName">
               <span>请</span>
               <router-link to="/login">登录</router-link>
-              <router-link to="/register" class="register">免费注册</router-link>
+              <router-link to="/register" class="register"
+                >免费注册</router-link
+              >
+            </p>
+            <!-- 已登录 有用户名 -->
+            <p v-else>
+              <a>{{ userName }}</a>
+              <a class="register" @click="logOut">退出登录</a>
             </p>
           </div>
           <div class="typeList">
@@ -39,7 +47,11 @@
               class="input-error input-xxlarge"
               v-model="keyword"
             />
-            <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch">
+            <button
+              class="sui-btn btn-xlarge btn-danger"
+              type="button"
+              @click="goSearch"
+            >
               搜索
             </button>
           </form>
@@ -51,14 +63,14 @@
 
 <script>
 export default {
-  name:'Header',
-  data(){
-    return{
-      keyword:''
-    }
+  name: "Header",
+  data() {
+    return {
+      keyword: "",
+    };
   },
-  methods:{
-    goSearch(){
+  methods: {
+    goSearch() {
       // 向search路由跳转
       // 路由传参：
       // 字符串形式
@@ -67,21 +79,39 @@ export default {
       // this.$router.push(`/search/${this.keyword}?k=${this.keyword.toUpperCase()}`)
       // 对象写法
       // this.$router.push({name:"search",params:{keyword:this.keyword||undefined},})}
-      if(this.$route.query){
+      if (this.$route.query) {
         // 如果有query参数也要传递
-        let location = {name:'search',params:{keyword:this.keyword||undefined}}
-        location.query= this.$route.query
-        this.$router.push(location)
+        let location = {
+          name: "search",
+          params: { keyword: this.keyword || undefined },
+        };
+        location.query = this.$route.query;
+        this.$router.push(location);
       }
-    }
+    },
+    // 退出登录
+    async logOut() {
+      // 需要发请求通知服务器清除数据
+      try {
+        await this.$store.dispatch("userLogOut");
+        // 如果退出成功回到首页
+        this.$router.push("/home");
+      } catch (error) {}
+    },
   },
-  mounted(){
+  mounted() {
     // 通过全局事件总线清除关键字
-    this.$bus.$on('clear',()=>{
-      this.keyword=''
-    })
-  }
-}
+    this.$bus.$on("clear", () => {
+      this.keyword = "";
+    });
+  },
+  computed: {
+    // 用户名信息
+    userName() {
+      return this.$store.state.user.userInfo.name;
+    },
+  },
+};
 </script>
 
 <style lang="less">
